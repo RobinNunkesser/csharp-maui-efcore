@@ -66,9 +66,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.6" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\EFCore.Core\EFCore.Core.csproj" />
+	  <ProjectReference Include="..\EFCore.Infrastructure\EFCore.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

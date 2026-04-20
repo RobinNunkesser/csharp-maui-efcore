@@ -1,30 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EFCore.MainPage">
+             x:Class="EFCore.MainPage"
+             Title="Todo-Liste">
 
     <VerticalStackLayout Padding="20" Spacing="12">
 
-        <HorizontalStackLayout Spacing="8">
-            <Entry x:Name="TitleEntry"
-                   Placeholder="Neue Aufgabe"
-                   HorizontalOptions="Fill" />
-            <Button Text="Hinzuf&#252;gen"
-                    Clicked="OnAddClicked" />
-        </HorizontalStackLayout>
+        <Label Text="Neues Todo"
+               FontAttributes="Bold"
+               FontSize="18" />
 
-        <CollectionView x:Name="TodoList" SelectionMode="None">
+        <Entry Text="{Binding NewTitle}"
+               Placeholder="Titel eingeben" />
+
+        <Button Text="Hinzufügen"
+                Command="{Binding AddCommand}"
+                HorizontalOptions="Start" />
+
+        <Label Text="Alle Todos"
+               FontAttributes="Bold"
+               FontSize="18"
+               Margin="0,12,0,0" />
+
+        <CollectionView ItemsSource="{Binding Todos}"
+                        SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <HorizontalStackLayout Spacing="12" Padding="0,4">
-                        <CheckBox IsChecked="{Binding Done}"
-                                  CheckedChanged="OnDoneChanged" />
+                        <CheckBox IsChecked="{Binding Done, Mode=OneWay}"
+                                  InputTransparent="True" />
                         <Label Text="{Binding Title}"
                                VerticalOptions="Center"
                                HorizontalOptions="Fill" />
-                        <Button Text="L&#246;schen"
-                                CommandParameter="{Binding .}"
-                                Clicked="OnDeleteClicked" />
+                        <Button Text="Erledigt"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleDoneCommand}"
+                                CommandParameter="{Binding .}" />
+                        <Button Text="Löschen"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                                CommandParameter="{Binding .}" />
                     </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
